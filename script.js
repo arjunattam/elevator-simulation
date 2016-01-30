@@ -5,17 +5,17 @@ var Button = function (buttonType, floorNum) {
 
     this.buttonId = this.buttonType + '_' + this.buttonFloor;
     this.buttonHtml = 'Floor: ' + this.buttonFloor + ' <a href="#" id="' + this.buttonId + '">' + 
-                        buttonType + '</a><br/>';
+                      buttonType + '</a><br/>';
 
     $('#floors').append (this.buttonHtml);
-    $('#' + this.buttonId).click( this.clickMethod );
+    $('#' + this.buttonId).click( this.clickMethod.bind(this) );
 }
 Button.prototype.getHtml = function () {
     return this.buttonHtml;
 }
 Button.prototype.clickMethod = function () {
     console.log (this);
-    main.buttonPressed(1); // TODO: fix this by abstract?
+    main.buttonPressed(this.buttonFloor); // TODO: fix this by abstract?
 }
 
 /* Elevator class */
