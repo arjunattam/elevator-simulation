@@ -5,7 +5,7 @@ Simplified elevator simulation to implement abstract method in object oriented d
 
 ## Solution
 ### Summary
-The solution has been deployed on Github pages, [link](http://arjun27.github.io/elevator-simulation/). Javascript prototypes have been used to define classes, their properties and methods.
+The solution has been deployed on Github pages, [link](http://arjun27.github.io/elevator-simulation/). Javascript prototypes have been used to define classes, their properties and methods. The solution is generalized, to __n floors__ and __m elevators__.
 
 The implementation is restricted to floor buttons only, and jobs are given to idle elevators only.
 
