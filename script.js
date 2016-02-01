@@ -38,17 +38,17 @@ Controller.prototype.handleRequest = function (direction, floor) {
 }
 
 /* Button class */
-var Button = function (buttonType, floorNum) {
+var Button = function (buttonType, floorNum, floorId) {
     Controller.apply(this); // TODO comment this?
     this.buttonType = buttonType; // 1 is up, -1 is down
     this.buttonFloor = floorNum;
     this.buttonTypeString = (this.buttonType == 1) ? 'up_button' : 'down_button';
 
     this.buttonId = this.buttonTypeString + '_' + this.buttonFloor;
-    this.buttonHtml = 'Floor: ' + this.buttonFloor + ' <a href="#" id="' + this.buttonId + '">' + 
+    this.buttonHtml = '<a href="#" id="' + this.buttonId + '">' + 
                       this.buttonTypeString + '</a><br/>';
 
-    $('#floors').append (this.buttonHtml);
+    $('#' + floorId).append (this.buttonHtml);
     $('#' + this.buttonId).click( this.buttonPressed.bind(this) );
 }
 Button.prototype = Object.create(Controller.prototype);
@@ -68,21 +68,24 @@ var Elevator = function (elevatorNum) {
     this.idleFloor = 0;
     this.stopLocations = [];
 
-    this.display();    
+    this.elevatorId = 'elevator_item_' + elevatorNum;
+    this.initDisplay();
 }
-Elevator.prototype.display = function () {
-    this.html = 'Elevator: ' + this.elevatorNum.toString() + ' ' + 'direction: ' + 
-                this.direction + ' ' + 'idle floor: ' + this.idleFloor + '<br/>';
-    // init UI
-    $('#elevators').append(this.html);
+Elevator.prototype.initDisplay = function () {
+    this.html = '<li id="' + this.elevatorId + '">Elevator: ' + this.elevatorNum + '<br/></li>';
+    $('#elevators_list').append(this.html);
+}
+Elevator.prototype.statusDisplay = function () {
+    this.html = 'Direction: ' + this.direction + ' ' + 'idle floor: ' + this.idleFloor + '<br/>';
+    $('#' + this.elevatorId).append(this.html);
 }
 Elevator.prototype.assignJob = function (direction, floor) {
     this.direction = direction;
-    this.display();
+    this.statusDisplay();
     setTimeout( function() { 
         this.idleFloor = floor; 
         this.direction = 0; 
-        this.display(); 
+        this.statusDisplay(); 
     }.bind(this), 2000 );
     // TODO logic for moving elevator
 }
@@ -99,9 +102,16 @@ Elevator.prototype.isEligible = function (direction, floor) {
 /* Floor class */
 var Floor = function (floorNum) {
     this.floorNum = floorNum;
-    this.upButton = new Button(1, floorNum);
-    this.downButton = new Button(-1, floorNum);
+
+    this.floorId = 'floor_item_' + this.floorNum;
+    this.initDisplay();
+
+    this.upButton = new Button(1, this.floorNum, this.floorId);
+    this.downButton = new Button(-1, this.floorNum, this.floorId);
 }
+Floor.prototype.initDisplay = function() {
+    $('#floors_list').append ('<li id="' + this.floorId + '">Floor: ' + this.floorNum + '<br/></li>');
+};
 
 /* init */
 var main = new Controller(3, 2);

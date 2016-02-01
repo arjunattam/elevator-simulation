@@ -1,0 +1,31 @@
+body, html {
+    font-family: sans-serif;
+    font-size: 13px;
+}
+ul.horizontal {
+    list-style-type: none;
+    margin-top: 40px;
+}
+ul.horizontal li {
+    display: inline-table;
+    margin: 5px;
+    padding: 5px;
+    width: 100px;
+    background-color: #eee;
+}
+.floors li {
+    height: 60px;
+}
+.floors .header {
+    background-color: #4073d1;
+    color: #fff;
+    font-weight: bold;
+}
+.elevators li {
+    height: 400px;
+}
+.elevators .header {
+    background-color: #43776a;
+    color: #fff;
+    font-weight: bold;
+}
