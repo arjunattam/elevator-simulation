@@ -58,12 +58,25 @@ Button.prototype.getHtml = function () {
     return this.buttonHtml;
 }
 
+/* Floor class */
+var Floor = function (floorNum) {
+    this.floorNum = floorNum;
+
+    this.floorId = 'floor_item_' + this.floorNum;
+    this.initDisplay();
+
+    this.upButton = new Button(1, this.floorNum, this.floorId);
+    this.downButton = new Button(-1, this.floorNum, this.floorId);
+}
+Floor.prototype.initDisplay = function() {
+    $('#floors_list').append ('<li id="' + this.floorId + '"><strong>Floor: ' + this.floorNum + '</strong><br/></li>');
+};
+
 /* Elevator class */
 var Elevator = function (elevatorNum) {
     this.elevatorNum = elevatorNum;
     this.direction = 0; // 0 is idle, 1 is up, -1 is down
     this.idleFloor = 0;
-    this.stopLocations = [];
 
     this.elevatorId = 'elevator_item_' + elevatorNum;
     this.initDisplay();
@@ -104,20 +117,6 @@ Elevator.prototype.isEligible = function (direction, floor) {
         return -1;
     }
 }
-
-/* Floor class */
-var Floor = function (floorNum) {
-    this.floorNum = floorNum;
-
-    this.floorId = 'floor_item_' + this.floorNum;
-    this.initDisplay();
-
-    this.upButton = new Button(1, this.floorNum, this.floorId);
-    this.downButton = new Button(-1, this.floorNum, this.floorId);
-}
-Floor.prototype.initDisplay = function() {
-    $('#floors_list').append ('<li id="' + this.floorId + '"><strong>Floor: ' + this.floorNum + '</strong><br/></li>');
-};
 
 /* init */
 var main = new Controller(6, 4);
