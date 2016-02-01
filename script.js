@@ -17,15 +17,10 @@ Controller.prototype.buttonPressed = function() {
     throw new Error('Abstract method');
 }
 Controller.prototype.handleRequest = function (direction, floor) {
-    // TODO which elevator to assign job
-    // find an elevator moving in that direction, if not, then find idle
-    // in moving elevator, check if floor < stopLocations[0] (for up)
-
     if ((direction == 1 && floor == main.floors.length - 1) || (direction == -1 && floor == 0)) {
         alert ('illegal operation');
         return;
     }
-
     var i, minIndex = -1, minDistance = Infinity;
     for (i = 0; i < main.elevators.length; i++) {
         var distanceIndex = main.elevators[i].isEligible (direction, floor);
@@ -37,7 +32,6 @@ Controller.prototype.handleRequest = function (direction, floor) {
         main.elevators[minIndex].assignJob(direction, floor);
     } else {
         alert('no eligible elevators');
-        // TODO request queue
     }
 }
 
@@ -99,9 +93,8 @@ Elevator.prototype.assignJob = function (direction, floor) {
             this.idleFloor = floor;
             this.direction = 0; 
             this.statusDisplay();
-        }.bind(this), 2000 );
+        }.bind(this), 1000 * Math.abs(floor - this.idleFloor) );
     }
-    // TODO logic for moving elevator
 }
 Elevator.prototype.isEligible = function (direction, floor) {
     if (this.direction == 0) {
@@ -110,7 +103,6 @@ Elevator.prototype.isEligible = function (direction, floor) {
     } else {
         return -1;
     }
-    // TODO for moving elevator
 }
 
 /* Floor class */
@@ -128,4 +120,4 @@ Floor.prototype.initDisplay = function() {
 };
 
 /* init */
-var main = new Controller(6, 3);
+var main = new Controller(6, 4);
